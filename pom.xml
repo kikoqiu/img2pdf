@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>kikoqiu.github.io</groupId>
+  <artifactId>img2pdf</artifactId>
+  <version>0.1.0</version>
+  <packaging>jar</packaging>
+
+  <name>${project.groupId}:${project.artifactId}</name>
+  <description>img2pdf</description>
+  <url>https://kikoqiu.github.io/${project.artifactId}</url>
+  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <scm>
+    <connection>scm:git:git://${scm.repository}.git</connection>
+    <developerConnection>scm:git:ssh://${scm.repository}.git</developerConnection>
+    <url>https://${scm.repository}</url>
+  </scm>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.pdfbox</groupId>
+      <artifactId>pdfbox</artifactId>
+      <version>2.0.18</version>
+      <!--scope>system</scope>
+      <systemPath>${project.basedir}/lib/pdfbox-app-2.0.18.jar</systemPath-->
+    </dependency>
+  </dependencies>
+
+  <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <!--plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>kikoqiu.img2pdf</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin-->
+
+            <!--plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-assembly-plugin</artifactId>
+              <executions>
+                  <execution>
+                      <phase>package</phase>
+                      <goals>
+                          <goal>single</goal>
+                      </goals>
+                      <configuration>
+                          <archive>
+                          <manifest>
+                              <mainClass>
+                                  kikoqiu.img2pdf
+                              </mainClass>
+                          </manifest>
+                          </archive>
+                          <descriptorRefs>
+                              <descriptorRef>jar-with-dependencies</descriptorRef>
+                          </descriptorRefs>
+                      </configuration>
+                  </execution>
+              </executions>
+            </plugin-->
+
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-shade-plugin</artifactId>
+              <configuration>
+                <minimizeJar>false</minimizeJar>
+            </configuration>
+              <executions>
+                  <execution>
+                      <goals>
+                          <goal>shade</goal>
+                      </goals>
+                      <configuration>
+                          <shadedArtifactAttached>true</shadedArtifactAttached>
+                          <transformers>
+                              <transformer implementation=
+                                "org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                  <mainClass>kikoqiu.img2pdf</mainClass>
+                          </transformer>
+                      </transformers>
+                  </configuration>
+                  </execution>
+              </executions>
+          </plugin>
+        </plugins>
+    </build>
+
+</project>
